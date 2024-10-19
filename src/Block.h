@@ -9,6 +9,8 @@ class Block {
 public:
     Block();
     void Draw();
+    void Move(int row, int col);
+    vector<blockPos> GetCellPositions();
     int id;
     map<int, vector<blockPos>> cells;
 
@@ -16,4 +18,6 @@ private:
     int cellSize;
     int rotationState;
     vector<Color> colors;
+    int rowOffset;
+    int colOffset;
 };

@@ -10,6 +10,7 @@ public:
         cells[1] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 1), blockPos(2, 2)};
         cells[2] = {blockPos(1, 0), blockPos(1, 1), blockPos(1, 2), blockPos(2, 0)};
         cells[3] = {blockPos(0, 0), blockPos(0, 1), blockPos(1, 1), blockPos(2, 1)};
+        Move(0, 4);
     }
 };
 
@@ -22,6 +23,7 @@ public:
         cells[1] = {blockPos(0, 0), blockPos(1, 0), blockPos(1, 1), blockPos(2, 1)};
         cells[2] = {blockPos(1, 1), blockPos(1, 2), blockPos(2, 0), blockPos(2, 1)};
         cells[3] = {blockPos(0, 0), blockPos(1, 0), blockPos(1, 1), blockPos(2, 1)};
+        Move(0, 4);
     }
 };
 // Khối Z
@@ -33,6 +35,7 @@ public:
         cells[1] = {blockPos(0, 1), blockPos(1, 0), blockPos(1, 1), blockPos(2, 0)};
         cells[2] = {blockPos(1, 0), blockPos(1, 1), blockPos(2, 1), blockPos(2, 2)};
         cells[3] = {blockPos(0, 1), blockPos(1, 0), blockPos(1, 1), blockPos(2, 0)};
+        Move(0, 4);
     }
 };
 
@@ -45,6 +48,7 @@ public:
         cells[1] = {blockPos(0, 1), blockPos(1, 1), blockPos(1, 2), blockPos(2, 1)};
         cells[2] = {blockPos(1, 0), blockPos(1, 1), blockPos(1, 2), blockPos(2, 1)};
         cells[3] = {blockPos(0, 1), blockPos(1, 0), blockPos(1, 1), blockPos(2, 1)};
+        Move(0, 4);
     }
 };
 // Khối J
@@ -56,6 +60,7 @@ public:
         cells[1] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 1), blockPos(2, 0)};
         cells[2] = {blockPos(1, 0), blockPos(1, 1), blockPos(1, 2), blockPos(2, 2)};
         cells[3] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 1), blockPos(2, 2)};
+        Move(0, 4);
     }
 };
 // Khối I
@@ -67,6 +72,7 @@ public:
         cells[1] = {blockPos(2, 0), blockPos(2, 1), blockPos(2, 2), blockPos(2, 3)};
         cells[2] = {blockPos(0, 2), blockPos(1, 2), blockPos(2, 2), blockPos(3, 2)};
         cells[3] = {blockPos(1, 0), blockPos(1, 1), blockPos(1, 2), blockPos(1, 3)};
+        Move(0, 4);
     }
 };
 // Khối O
@@ -76,5 +82,6 @@ public:
         id = 7;
         cells[0] = cells[1] = cells[2] = cells[3] =
             {blockPos(0, 0), blockPos(0, 1), blockPos(1, 0), blockPos(1, 1)};
+        Move(0, 4);
     }
 };

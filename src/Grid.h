@@ -10,6 +10,7 @@ public:
     void Init();
     void Print();
     void Draw();
+    bool CheckCellsOutside(int row, int col);
     int grid[30][10];
 
 private:
