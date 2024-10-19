@@ -21,6 +21,8 @@ public:
 private:
     bool CheckBlockOutside();
     void RorateBlock();
+    void LockBlock();
+    bool CheckBlockCollision();
     vector<Block> blocks;
     Block currentBlock;
     Block nextBlock;

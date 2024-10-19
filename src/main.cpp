@@ -24,7 +24,6 @@ int main() {
         if (TimeTrigger(mainCore.setSpeed)) {
             mainCore.MoveDown();
         }
-
         BeginDrawing();
         ClearBackground(background);
         DrawRectangleLines(0, 0, 301, 601, WHITE);

@@ -57,9 +57,9 @@ public:
     BlockJ() {
         id = 5;
         cells[0] = {blockPos(0, 0), blockPos(1, 0), blockPos(1, 1), blockPos(1, 2)};
-        cells[1] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 1), blockPos(2, 0)};
+        cells[1] = {blockPos(0, 1), blockPos(0, 2), blockPos(1, 1), blockPos(2, 1)};
         cells[2] = {blockPos(1, 0), blockPos(1, 1), blockPos(1, 2), blockPos(2, 2)};
-        cells[3] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 1), blockPos(2, 2)};
+        cells[3] = {blockPos(0, 1), blockPos(1, 1), blockPos(2, 0), blockPos(2, 1)};
         Move(0, 4);
     }
 };

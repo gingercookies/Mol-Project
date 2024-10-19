@@ -18,14 +18,23 @@ Block Core::getRandomBlock() {
     if (blocks.empty()) {
         blocks = getBlocks();
     }
-    int random = rand() % blocks.size();
+    // int random = rand() % blocks.size();
+    // Block block = blocks[random];
+    // blocks.erase(blocks.begin() + random);
+    // return block;
+
+    random_device rd;
+    mt19937 gen(rd());
+    uniform_int_distribution<> distr(0, blocks.size() - 1);
+
+    int random = distr(gen);
     Block block = blocks[random];
     blocks.erase(blocks.begin() + random);
     return block;
 }
 
 vector<Block> Core::getBlocks() {
-    return {BlockL(), BlockS(), BlockZ(), BlockT(), BlockJ()};
+    return {BlockL(), BlockS(), BlockZ(), BlockT(), BlockJ(), BlockI(), BlockO()};
 }
 
 void Core::Draw() {
@@ -63,20 +72,21 @@ void Core::Input() {
 // Input
 void Core::MoveLeft() {
     currentBlock.Move(0, -1);
-    if (CheckBlockOutside()) {
+    if (CheckBlockOutside() || !CheckBlockCollision()) {
         currentBlock.Move(0, 1);
     }
 }
 void Core::MoveRight() {
     currentBlock.Move(0, 1);
-    if (CheckBlockOutside()) {
+    if (CheckBlockOutside() || !CheckBlockCollision()) {
         currentBlock.Move(0, -1);
     }
 }
 void Core::MoveDown() {
     currentBlock.Move(1, 0);
-    if (CheckBlockOutside()) {
+    if (CheckBlockOutside() || !CheckBlockCollision()) {
         currentBlock.Move(-1, 0);
+        LockBlock();
     }
 }
 
@@ -93,15 +103,16 @@ bool Core::CheckBlockOutside() {
 
 void Core::RorateBlock() {
     currentBlock.Rotate();
-    if (CheckBlockOutside()) {
+    if (CheckBlockOutside() || !CheckBlockCollision()) {
         currentBlock.UndoRorate();
     }
 }
 
+// setSpeed
 void Core::increaseSpeed() {
     setSpeed -= 0.1;
-    if (setSpeed <= 0.3) {
-        setSpeed = 0.3;
+    if (setSpeed <= 0.2) {
+        setSpeed = 0.2;
     }
 }
 void Core::decreaseSpeed() {
@@ -109,4 +120,23 @@ void Core::decreaseSpeed() {
     if (setSpeed >= 1.2) {
         setSpeed = 1.2;
     }
+}
+
+void Core::LockBlock() {
+    vector<blockPos> cells = currentBlock.GetCellPositions();
+    for (blockPos cell: cells) {
+        grid.grid[cell.row][cell.col] = currentBlock.id;
+    }
+    currentBlock = nextBlock;
+    nextBlock = getRandomBlock();
+}
+
+bool Core::CheckBlockCollision() {
+    vector<blockPos> cells = currentBlock.GetCellPositions();
+    for (blockPos cell: cells) {
+        if (!grid.CheckEmpty(cell.row, cell.col)) {
+            return false;
+        }
+    }
+    return true;
 }
