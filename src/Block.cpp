@@ -13,7 +13,7 @@ Block::Block() {
 void Block::Draw() {
     vector<blockPos> currentCells = GetCellPositions();
     for (blockPos cell: currentCells) {
-        DrawRectangle(cell.col * cellSize + 1, cell.row * cellSize + 1, cellSize, cellSize, colors[id]);
+        DrawRectangle(cell.col * cellSize + 11, cell.row * cellSize + 11, cellSize - 1, cellSize - 1, colors[id]);
     }
 }
 

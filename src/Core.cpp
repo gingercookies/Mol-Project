@@ -12,6 +12,7 @@ Core::Core() {
     blocks = getBlocks();
     currentBlock = getRandomBlock();
     nextBlock = getRandomBlock();
+    gameOver = false;
 };
 
 Block Core::getRandomBlock() {
@@ -66,28 +67,41 @@ void Core::Input() {
             increaseSpeed();
             cout << setSpeed << endl;
             break;
+        case KEY_R:
+            Reset();
+            break;
     }
 }
 
 // Input
 void Core::MoveLeft() {
-    currentBlock.Move(0, -1);
-    if (CheckBlockOutside() || !CheckBlockCollision()) {
-        currentBlock.Move(0, 1);
+    if (!gameOver) {
+        currentBlock.Move(0, -1);
+        if (CheckBlockOutside() || !CheckBlockCollision()) {
+            currentBlock.Move(0, 1);
+        }
     }
 }
 void Core::MoveRight() {
-    currentBlock.Move(0, 1);
-    if (CheckBlockOutside() || !CheckBlockCollision()) {
-        currentBlock.Move(0, -1);
+    if (!gameOver) {
+        currentBlock.Move(0, 1);
+        if (CheckBlockOutside() || !CheckBlockCollision()) {
+            currentBlock.Move(0, -1);
+        }
     }
 }
 void Core::MoveDown() {
-    currentBlock.Move(1, 0);
-    if (CheckBlockOutside() || !CheckBlockCollision()) {
-        currentBlock.Move(-1, 0);
-        LockBlock();
+    if (!gameOver) {
+        currentBlock.Move(1, 0);
+        if (CheckBlockOutside() || !CheckBlockCollision()) {
+            currentBlock.Move(-1, 0);
+            LockBlock();
+        }
     }
+}
+
+float Core::getSetSpeed() {
+    return setSpeed;
 }
 
 // Tránh block tẩu thoát ra khỏi nhà giam 🐧
@@ -102,23 +116,23 @@ bool Core::CheckBlockOutside() {
 }
 
 void Core::RorateBlock() {
-    currentBlock.Rotate();
-    if (CheckBlockOutside() || !CheckBlockCollision()) {
-        currentBlock.UndoRorate();
+    if (!gameOver) {
+        currentBlock.Rotate();
+        if (CheckBlockOutside() || !CheckBlockCollision()) {
+            currentBlock.UndoRorate();
+        }
     }
 }
 
 // setSpeed
 void Core::increaseSpeed() {
-    setSpeed -= 0.1;
-    if (setSpeed <= 0.2) {
-        setSpeed = 0.2;
+    if (setSpeed > 0.2) {
+        setSpeed -= 0.1;
     }
 }
 void Core::decreaseSpeed() {
-    setSpeed += 0.1;
-    if (setSpeed >= 1.2) {
-        setSpeed = 1.2;
+    if (setSpeed < 1.2) {
+        setSpeed += 0.1;
     }
 }
 
@@ -127,8 +141,15 @@ void Core::LockBlock() {
     for (blockPos cell: cells) {
         grid.grid[cell.row][cell.col] = currentBlock.id;
     }
+
+    rowsCleared = grid.ClearFullRows();
+    score += rowsCleared * rowsCleared * 100;
+
     currentBlock = nextBlock;
     nextBlock = getRandomBlock();
+    if (!CheckBlockCollision()) {
+        gameOver = true;
+    }
 }
 
 bool Core::CheckBlockCollision() {
@@ -141,6 +162,16 @@ bool Core::CheckBlockCollision() {
     return true;
 }
 
+void Core::Reset() {
+    grid.Init();
+    blocks = getBlocks();
+    currentBlock = getRandomBlock();
+    nextBlock = getRandomBlock();
+    gameOver = false;
+    score = 0;
+    rowsCleared = 0;
+}
+
 bool Core::TimeTrigger(double interval) {
     if (GetTime() - lastUpd >= interval) {
         lastUpd = GetTime();
@@ -151,12 +182,12 @@ bool Core::TimeTrigger(double interval) {
 
 void Core::fastMoveDown() {
     if (IsKeyDown(KEY_DOWN)) {
-        setSpeed = fastSpeedMultiplier;
+        if (TimeTrigger(fastSpeedMultiplier)) {
+            MoveDown();
+        }
     } else {
-        setSpeed = 1.0f;
-    }
-
-    if (TimeTrigger(setSpeed * setSpeed)) {
-        MoveDown();
+        if (TimeTrigger(setSpeed)) {
+            MoveDown();
+        }
     }
 }
