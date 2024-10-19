@@ -140,3 +140,23 @@ bool Core::CheckBlockCollision() {
     }
     return true;
 }
+
+bool Core::TimeTrigger(double interval) {
+    if (GetTime() - lastUpd >= interval) {
+        lastUpd = GetTime();
+        return true;
+    }
+    return false;
+}
+
+void Core::fastMoveDown() {
+    if (IsKeyDown(KEY_DOWN)) {
+        setSpeed = fastSpeedMultiplier;
+    } else {
+        setSpeed = 1.0f;
+    }
+
+    if (TimeTrigger(setSpeed * setSpeed)) {
+        MoveDown();
+    }
+}

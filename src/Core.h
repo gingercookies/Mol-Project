@@ -14,15 +14,19 @@ public:
     void MoveLeft();
     void MoveRight();
     void MoveDown();
-    void getSetSpeed();
+    void getSetSpeed();  // TODO: show this on screen
+    void fastMoveDown();
     Grid grid;
-    double setSpeed = 1;
+    double setSpeed = 1.00f;
 
 private:
     bool CheckBlockOutside();
     void RorateBlock();
     void LockBlock();
     bool CheckBlockCollision();
+    float fastSpeedMultiplier = 0.2f;
+    double lastUpd = 0;
+    bool TimeTrigger(double interval);
     vector<Block> blocks;
     Block currentBlock;
     Block nextBlock;
