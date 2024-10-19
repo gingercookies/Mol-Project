@@ -14,11 +14,17 @@ public:
     void MoveLeft();
     void MoveRight();
     void MoveDown();
+    void getSetSpeed();
     Grid grid;
+    double setSpeed = 1;
 
 private:
     bool CheckBlockOutside();
+    void RorateBlock();
     vector<Block> blocks;
     Block currentBlock;
     Block nextBlock;
+
+    void increaseSpeed();
+    void decreaseSpeed();
 };

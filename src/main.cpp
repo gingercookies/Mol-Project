@@ -3,6 +3,15 @@
 #include "Core.h"
 #include "raylib.h"
 using namespace std;
+
+double lastUpd = 0;
+bool TimeTrigger(double interval) {
+    if (GetTime() - lastUpd >= interval) {
+        lastUpd = GetTime();
+        return true;
+    }
+    return false;
+}
 int main() {
     Color background = {91, 91, 91, 255};
     InitWindow(451, 700, "Ehe");
@@ -12,6 +21,10 @@ int main() {
 
     while (WindowShouldClose() == false) {
         mainCore.Input();
+        if (TimeTrigger(mainCore.setSpeed)) {
+            mainCore.MoveDown();
+        }
+
         BeginDrawing();
         ClearBackground(background);
         DrawRectangleLines(0, 0, 301, 601, WHITE);

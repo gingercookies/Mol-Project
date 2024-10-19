@@ -11,6 +11,8 @@ public:
     void Draw();
     void Move(int row, int col);
     vector<blockPos> GetCellPositions();
+    void Rotate();
+    void UndoRorate();
     int id;
     map<int, vector<blockPos>> cells;
 

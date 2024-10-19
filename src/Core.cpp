@@ -1,9 +1,11 @@
 #include "Core.h"
 
+#include <iostream>
 #include <random>
 
 #include "Blockcompoments.cpp"
 #include "Grid.h"
+
 using namespace std;
 Core::Core() {
     grid = Grid();
@@ -45,6 +47,15 @@ void Core::Input() {
             MoveRight();
             break;
         case KEY_SPACE:
+            RorateBlock();
+            break;
+        case KEY_MINUS:
+            decreaseSpeed();
+            cout << setSpeed << endl;
+            break;
+        case KEY_EQUAL:
+            increaseSpeed();
+            cout << setSpeed << endl;
             break;
     }
 }
@@ -68,6 +79,8 @@ void Core::MoveDown() {
         currentBlock.Move(-1, 0);
     }
 }
+
+// Tránh block tẩu thoát ra khỏi nhà giam 🐧
 bool Core::CheckBlockOutside() {
     vector<blockPos> cells = currentBlock.GetCellPositions();
     for (blockPos cell: cells) {
@@ -76,4 +89,24 @@ bool Core::CheckBlockOutside() {
         }
     }
     return false;
+}
+
+void Core::RorateBlock() {
+    currentBlock.Rotate();
+    if (CheckBlockOutside()) {
+        currentBlock.UndoRorate();
+    }
+}
+
+void Core::increaseSpeed() {
+    setSpeed -= 0.1;
+    if (setSpeed <= 0.3) {
+        setSpeed = 0.3;
+    }
+}
+void Core::decreaseSpeed() {
+    setSpeed += 0.1;
+    if (setSpeed >= 1.2) {
+        setSpeed = 1.2;
+    }
 }

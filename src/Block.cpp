@@ -31,3 +31,18 @@ vector<blockPos> Block::GetCellPositions() {
     }
     return movedCells;
 }
+
+void Block::Rotate() {
+    rotationState++;
+    // vì chỉ có 4 trạng thái, nên lần tiếp theo chuyển về 0
+    if (rotationState == static_cast<int>(cells.size())) {
+        rotationState = 0;
+    }
+}
+
+void Block::UndoRorate() {
+    rotationState--;
+    if (rotationState == -1) {
+        rotationState = static_cast<int>(cells.size()) - 1;
+    }
+}
