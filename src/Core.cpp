@@ -1,10 +1,13 @@
 #include "Core.h"
 
+#include <iomanip>
 #include <iostream>
 #include <random>
+#include <sstream>
 
 #include "Blockcompoments.cpp"
 #include "Grid.h"
+#include "raylib.h"
 
 using namespace std;
 Core::Core() {
@@ -40,12 +43,28 @@ vector<Block> Core::getBlocks() {
 
 void Core::Draw() {
     grid.Draw();
-    currentBlock.Draw();
-    // nextBlock.Draw();
+    currentBlock.Draw(11, 11);
+    switch (nextBlock.id) {
+        case 6:  // I
+            nextBlock.Draw(215, 152);
+            break;
+        case 7:  // O
+            nextBlock.Draw(235, 180);
+            break;
+        default:
+            nextBlock.Draw(217, 175);
+            break;
+    }
 }
 
 void Core::Input() {
     int key = GetKeyPressed();
+    if (gameOver) {
+        if (key == KEY_R) {
+            Reset();
+        }
+        return;
+    }
     switch (key) {
         case KEY_DOWN:
             MoveDown();
@@ -57,6 +76,7 @@ void Core::Input() {
             MoveRight();
             break;
         case KEY_SPACE:
+        case KEY_UP:
             RorateBlock();
             break;
         case KEY_MINUS:
@@ -100,8 +120,14 @@ void Core::MoveDown() {
     }
 }
 
-float Core::getSetSpeed() {
-    return setSpeed;
+void Core::getSetSpeed() {
+    stringstream speed;
+    speed << fixed << setprecision(1) << setSpeed;
+
+    string speedStr = speed.str();
+    const char* speedshow = speedStr.c_str();
+    int speedTextWidth = MeasureText(speedshow, 25);
+    DrawText(speedshow, 320 + (120 - speedTextWidth) / 2, 320, 25, BLACK);
 }
 
 // Tránh block tẩu thoát ra khỏi nhà giam 🐧
@@ -142,8 +168,9 @@ void Core::LockBlock() {
         grid.grid[cell.row][cell.col] = currentBlock.id;
     }
 
-    rowsCleared = grid.ClearFullRows();
-    score += rowsCleared * rowsCleared * 100;
+    int tmp = grid.ClearFullRows();
+    rowsCleared += tmp;
+    score += tmp * tmp * 10;
 
     currentBlock = nextBlock;
     nextBlock = getRandomBlock();
@@ -165,11 +192,12 @@ bool Core::CheckBlockCollision() {
 void Core::Reset() {
     grid.Init();
     blocks = getBlocks();
+    score = 0;
+    rowsCleared = 0;
+    setSpeed = 1.00f;
     currentBlock = getRandomBlock();
     nextBlock = getRandomBlock();
     gameOver = false;
-    score = 0;
-    rowsCleared = 0;
 }
 
 bool Core::TimeTrigger(double interval) {
@@ -184,6 +212,7 @@ void Core::fastMoveDown() {
     if (IsKeyDown(KEY_DOWN)) {
         if (TimeTrigger(fastSpeedMultiplier)) {
             MoveDown();
+            if (!gameOver) score++;
         }
     } else {
         if (TimeTrigger(setSpeed)) {

@@ -10,10 +10,10 @@ Block::Block() {
     rowOffset = 0;
 }
 
-void Block::Draw() {
+void Block::Draw(int offsetX, int offsetY) {
     vector<blockPos> currentCells = GetCellPositions();
     for (blockPos cell: currentCells) {
-        DrawRectangle(cell.col * cellSize + 11, cell.row * cellSize + 11, cellSize - 1, cellSize - 1, colors[id]);
+        DrawRectangle(cell.col * cellSize + offsetX, cell.row * cellSize + offsetY, cellSize - 1, cellSize - 1, colors[id]);
     }
 }
 

@@ -18,7 +18,7 @@ public:
 private:
     bool CheckFull(int row);
     void clearRow(int row);
-    void shiftRowsDown();
+    void shiftRowsDown(int clearedrows);
     int numRows;
     int numCols;
     int cellSize;

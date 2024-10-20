@@ -8,7 +8,7 @@ using namespace std;
 class Block {
 public:
     Block();
-    void Draw();
+    void Draw(int offsetX, int offsetY);
     void Move(int row, int col);
     vector<blockPos> GetCellPositions();
     void Rotate();

@@ -58,10 +58,9 @@ int Grid::ClearFullRows() {
         if (CheckFull(row)) {
             clearRow(row);
             completed++;
+            shiftRowsDown(row);
+            row++;
         }
-    }
-    if (completed > 0) {
-        shiftRowsDown();
     }
     return completed;
 }
@@ -79,17 +78,13 @@ void Grid::clearRow(int row) {
     }
 }
 
-void Grid::shiftRowsDown() {
-    // Dời hàng xuống
-    for (int row = numRows - 1; row >= completed; row--) {
+void Grid::shiftRowsDown(int clearedrow) {
+    for (int row = clearedrow; row > 0; row--) {
         for (int col = 0; col < numCols; col++) {
-            grid[row][col] = grid[row - completed][col];
+            grid[row][col] = grid[row - 1][col];
         }
     }
-    // Làm trống các hàng trên cùng
-    for (int row = 0; row < completed; row++) {
-        for (int col = 0; col < numCols; col++) {
-            grid[row][col] = 0;
-        }
+    for (int col = 0; col < numCols; col++) {
+        grid[0][col] = 0;
     }
 }

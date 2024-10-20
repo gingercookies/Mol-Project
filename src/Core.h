@@ -14,7 +14,7 @@ public:
     void MoveLeft();
     void MoveRight();
     void MoveDown();
-    float getSetSpeed();  // TODO: show this on screen
+    void getSetSpeed();
     void fastMoveDown();
     Grid grid;
     double setSpeed = 1.00f;
