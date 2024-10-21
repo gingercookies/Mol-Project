@@ -37,12 +37,12 @@ $(OBJS_DIR)/%.o: ../src/%.cpp
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -c $< -o $@
 
 # Chạy file sau khi biên dịch
-run: $(TARGET)
-	./$(TARGET)
+#run: $(TARGET)
+#	./$(TARGET)
 
 # Xoá file obj và file thực thi rồi biên dịch lại
 # $(OBJS_DIR)/*.o: xoá tất cả các file obj
 # $(TARGET): xoá file thực thi (EA.exe)
-clean:
-	if exist $(OBJS_DIR) del /Q $(OBJS_DIR)\*.o
-	if exist $(TARGET) del /Q $(TARGET)
+#clean:
+	#if exist $(OBJS_DIR) del /Q $(OBJS_DIR)\*.o
+	#if exist $(TARGET) del /Q $(TARGET)
