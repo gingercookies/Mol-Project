@@ -44,5 +44,5 @@ $(OBJS_DIR)/%.o: ../src/%.cpp
 # $(OBJS_DIR)/*.o: xoá tất cả các file obj
 # $(TARGET): xoá file thực thi (EA.exe)
 # clean:
-	# if exist $(OBJS_DIR) del /Q $(OBJS_DIR)\*.o
-	# if exist $(TARGET) del /Q $(TARGET)
+#	if exist $(OBJS_DIR) del /Q $(OBJS_DIR)\*.o
+#	if exist $(TARGET) del /Q $(TARGET)
