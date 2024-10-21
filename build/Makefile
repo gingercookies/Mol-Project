@@ -25,7 +25,7 @@ OBJS_DIR = obj
 OBJS = $(SRCS:../src/%.cpp=$(OBJS_DIR)/%.o)
 TARGET = EA.exe	# Tên file sau khi build
 
-all: $(TARGET) run
+all: $(TARGET) # run
 # Tạo file thực thi từ các file obj
 $(TARGET): $(OBJS)
 	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(TARGET) $(OBJS) $(LIBS)
