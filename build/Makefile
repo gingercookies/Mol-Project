@@ -15,7 +15,7 @@ INCLUDES = -I ../include	# Include directories
 # -lgdi32: Link to the GDI library
 # -lwinmm: Link to the Windows Multimedia library
 # -mwindows: Hiện game mà không hiện console
-LIBS = -L lib -lraylib -lopengl32 -lgdi32 -lwinmm #-mwindows
+LIBS = -L ../lib -lraylib -lopengl32 -lgdi32 -lwinmm #-mwindows
 
 SRCS = $(wildcard ../src/*.cpp)	# Lôi mọi file từ src
 # Đổi tên file từ src thành obj
